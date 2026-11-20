@@ -31,7 +31,7 @@ theorem ordered_product_jet {D C : ℝ → R} {a b c e : R}
   have h2' := h2.congr_right (fun t ↦ (pow_two t).symm)
   apply ((h1.add h2').add h3).congr_left
   intro t
-  simp only [sub_mul, add_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_smul, smul_sub, smul_add]
+  simp only [sub_mul, add_mul, mul_sub, smul_mul_assoc, mul_smul_comm, smul_smul, smul_add]
   rw [← pow_two]
   abel
 
@@ -42,9 +42,11 @@ theorem cubic_primitive {f g : ℝ → R} {a b : R}
   let P := fun t : ℝ ↦ f 0 + (t^2/2) • a + (t^3/3) • b
   have hP (t : ℝ) : HasDerivAt P (t • a + t^2 • b) t := by
     have h2 : HasDerivAt (fun s : ℝ ↦ s^2/2) t t := by
-      convert ((hasDerivAt_pow 2 t).div_const 2) using 1 <;> ring
+      convert ((hasDerivAt_pow 2 t).div_const 2) using 1
+      ring
     have h3 : HasDerivAt (fun s : ℝ ↦ s^3/3) (t^2) t := by
-      convert ((hasDerivAt_pow 3 t).div_const 3) using 1 <;> ring
+      convert ((hasDerivAt_pow 3 t).div_const 3) using 1
+      ring
     simpa [P, Pi.add_def] using ((hasDerivAt_const t (f 0)).add (h2.smul_const a)).add (h3.smul_const b)
   have hr := integrate_remainder (f := fun t ↦ f t - P t) (n := 2)
     (hd.mono fun t ht ↦ ht.sub (hP t)) he
@@ -79,7 +81,7 @@ theorem ordered_chord_identity {U V C : ℝ → R} {e : R}
   have h := cubic_primitive hS (ordered_product_jet hD2' hc rfl)
   have hneg := h.comp_tendsto (show Tendsto (fun t : ℝ ↦ -t) (𝓝 0) (𝓝 0) by
     simpa using continuous_neg.tendsto (0:ℝ))
-  simp only [Function.comp_def, neg_pow, Even.neg_pow (by decide : Even 2),
+  simp only [Function.comp_def, Even.neg_pow (by decide : Even 2),
     Odd.neg_pow (by decide : Odd 3), isLittleO_neg_right] at hneg
   have zero : (2/3:ℝ) • b = 0 := by
     apply coefficient_zero (n := 3)

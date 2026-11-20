@@ -18,6 +18,7 @@ variable {Ω : Set E} {F G : E → E} {p : E} {w : ℝ}
 def blendJac (w : ℝ) (a b : Endo E) : E × E →L[ℝ] E :=
   (1-w) • a.comp (fst ℝ E E) + w • b.comp (snd ℝ E E)
 
+omit [CompleteSpace E] in
 theorem ChartAt.inv_derivative (c : ChartAt F p) {y : E} (hy : y ∈ c.e.target)
     (hd : DifferentiableAt ℝ F (c.e.symm y)) (hi : (jac F (c.e.symm y)).IsInvertible) :
     HasFDerivAt c.e.symm (jac F (c.e.symm y)).inverse y := by
@@ -27,6 +28,7 @@ theorem ChartAt.inv_derivative (c : ChartAt F p) {y : E} (hy : y ∈ c.e.target)
   exact (hd.hasFDerivAt.congr_fderiv hL.symm).congr_of_eventuallyEq
     (Filter.Eventually.of_forall fun x ↦ congrFun c.forward x)
 
+omit [CompleteSpace E] in
 theorem ChartAt.pool_derivative (c : ChartAt F p) (w : ℝ) {z : E × E}
     (hx : DifferentiableAt ℝ F z.1) (hy : DifferentiableAt ℝ F z.2)
     (ht : mix w (F z.1) (F z.2) ∈ c.e.target)
@@ -40,6 +42,7 @@ theorem ChartAt.pool_derivative (c : ChartAt F p) (w : ℝ) {z : E × E}
       ((hy.hasFDerivAt.comp z (hasFDerivAt_snd)).const_smul _)
   exact (c.inv_derivative ht hu hi).comp z h
 
+omit [CompleteSpace E] in
 theorem ChartAt.eventually_pool_derivative {n : ℕ∞ω} (hn : n ≠ 0) (ho : IsOpen Ω)
     (hp : p ∈ Ω) (rF : RegularOn n Ω F) (c : ChartAt F p) (w : ℝ) :
     ∀ᶠ z in 𝓝 (p,p), HasFDerivAt (c.pool w)
@@ -53,12 +56,14 @@ theorem ChartAt.eventually_pool_derivative {n : ℕ∞ω} (hn : n ≠ 0) (ho : I
     ((rF _ hy).1.differentiableAt hn) ht ((rF _ hu).1.differentiableAt hn) (rF _ hu).2
 
 set_option backward.isDefEq.respectTransparency false in
+omit [CompleteSpace E] in
 theorem mix_hasFDerivAt (w : ℝ) (z : E × E) :
     HasFDerivAt (fun z : E × E ↦ mix w z.1 z.2) (blendJac w 1 1) z := by
   simpa [blendJac, mix, ContinuousLinearMap.one_def, Pi.add_def, Pi.smul_def] using
     ((hasFDerivAt_fst (𝕜 := ℝ) (p := z)).const_smul (1-w)).add
       ((hasFDerivAt_snd (𝕜 := ℝ) (p := z)).const_smul w)
 
+omit [CompleteSpace E] in
 /-- Endpoint differences weighted by the two inverse Jacobians sum to zero. -/
 theorem endpoint_equation {n : ℕ∞ω} (hn : n ≠ 0) (ho : IsOpen Ω) (hp : p ∈ Ω)
     (rF : RegularOn n Ω F) (rG : RegularOn n Ω G) (bal : LocalBalance Ω w F G)
@@ -81,7 +86,7 @@ theorem endpoint_equation {n : ℕ∞ω} (hn : n ≠ 0) (ho : IsOpen Ω) (hp : p
     exact (smul_right_injective E ha) h
   have hx' := cancel (sub_ne_zero.mpr (ne_of_gt hw')) hx
   have hy' := cancel (ne_of_gt hw) hy
-  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.mul_apply, sub_apply, map_sub,
+  simp only [add_apply, mul_apply_eq_comp, sub_apply, map_sub,
     zero_apply]
   rw [sub_add_sub_comm, hx', hy', sub_self]
 

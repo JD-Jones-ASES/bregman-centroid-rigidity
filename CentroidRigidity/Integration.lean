@@ -26,6 +26,7 @@ theorem sExp_hasDerivAt (l t : ℝ) : HasDerivAt (sExp l) (Real.exp (l*t)) t := 
 variable {H ι : Type*} [NormedAddCommGroup H] [NormedSpace ℝ H] [FiniteDimensional ℝ H]
 variable [Fintype ι] {Ω : Set H} {F : H → H} {p : H}
 
+omit [Fintype ι] in
 /-- Linear coordinate derivative, including the translation to the chosen base point. -/
 theorem coordinate_deriv (B : Module.Basis ι ℝ H) (i : ι) (p x : H) :
     HasFDerivAt (fun y ↦ B.repr (y-p) i) (B.coord i).toContinuousLinearMap x := by
@@ -34,6 +35,7 @@ theorem coordinate_deriv (B : Module.Basis ι ℝ H) (i : ι) (p x : H) :
   change HasFDerivAt ((B.coord i).toContinuousLinearMap ∘ fun y ↦ y-p) _ x
   simpa only [id_eq,ContinuousLinearMap.comp_id] using hd
 
+omit [Fintype ι] in
 theorem axis_column (ho : IsOpen Ω) (hc : IsPreconnected Ω) (hp : p ∈ Ω)
     (rF : RegularOn 2 Ω F) (B : Module.Basis ι ℝ H) (l : ι → ℝ)
     (haxes : ∀ x ∈ Ω, ∀ h i, logJac F x h (B i) = (l i * B.repr h i) • B i)
@@ -79,12 +81,12 @@ theorem integrate_axes (ho : IsOpen Ω) (hc : IsPreconnected Ω) (hp : p ∈ Ω)
     · rfl
     apply ContinuousLinearMap.ext
     intro a
-    simp only [ContinuousLinearMap.comp_apply,ContinuousLinearMap.sum_apply,map_sum]
+    simp only [ContinuousLinearMap.comp_apply,sum_apply,map_sum]
     conv_lhs => rw [← B.sum_repr a, map_sum]
     apply Finset.sum_congr rfl
     intro i _
     rw [map_smul,axis_column ho hc hp rF B l haxes hx i]
-    simp [ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.comp_apply,
+    simp [ContinuousLinearMap.smulRight_apply,
       Module.Basis.coord_apply, smul_smul, mul_comm]
   have hF (x : H) (hx : x ∈ Ω) := ((rF x hx).1.differentiableAt (by decide)).hasFDerivAt
   have heq := ho.eqOn_of_fderiv_eq hc

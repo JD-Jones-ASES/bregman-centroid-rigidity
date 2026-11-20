@@ -46,7 +46,7 @@ theorem logDeriv_sym (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 3 Ω F)
   have r := (hJ.clm_apply (hasDerivAt_const 0 u)).inner ℝ (hC.clm_apply (hasDerivAt_const 0 v))
   have eqn := l.unique (r.congr_of_eventuallyEq e)
   simp only [hJ0,hC0,mul_apply_eq_comp,add_apply,Pi.mul_apply,map_zero,add_zero,zero_add,
-    inner_zero_left,inner_zero_right,inner_add_left,inner_add_right] at eqn
+    inner_zero_right,inner_add_left] at eqn
   have hcancel := sym (K u) v
   change ⟪A (D u),v⟫_ℝ = ⟪A u,D v⟫_ℝ
   linarith

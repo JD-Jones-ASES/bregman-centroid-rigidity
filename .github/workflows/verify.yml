@@ -31,6 +31,14 @@ jobs:
           use-mathlib-cache: true
       - name: Build statement and proofs from the pinned sources
         run: lake build
+      - name: Check the public proof interface and its mutation controls
+        run: |
+          python3 scripts/check_sources.py
+          python3 scripts/check_contracts.py
+      - name: Replay the symbolic identities and coupled examples
+        run: |
+          python3 -m pip install sympy==1.14.0
+          python3 scripts/exact_replay.py
       - name: Install the sandbox pinned by Palomar
         run: |
           sudo apt-get update -qq

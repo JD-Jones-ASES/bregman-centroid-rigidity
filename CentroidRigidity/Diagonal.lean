@@ -18,24 +18,31 @@ variable {Ω : Set E} {F G : E → E} {p : E} {w : ℝ}
 def ray (p h : E) (t : ℝ) := p + t • h
 def ends (p h : E) (t : ℝ) := (p, ray p h t)
 
+omit [CompleteSpace E] in
 @[simp] theorem ray_zero (p h : E) : ray p h 0 = p := by simp [ray]
+omit [CompleteSpace E] in
 @[simp] theorem ends_zero (p h : E) : ends p h 0 = (p,p) := by simp [ends]
 
+omit [CompleteSpace E] in
 theorem ray_hasDerivAt (p h : E) (t : ℝ) : HasDerivAt (ray p h) h t := by
   change HasDerivAt (fun s : ℝ ↦ p + s • h) h t
   simpa [Pi.add_def] using (hasDerivAt_const t p).add ((hasDerivAt_id t).smul_const h)
 
+omit [CompleteSpace E] in
 theorem ends_hasDerivAt (p h : E) (t : ℝ) : HasDerivAt (ends p h) (0,h) t :=
   (hasDerivAt_const t p).prodMk (ray_hasDerivAt p h t)
 
+omit [CompleteSpace E] in
 theorem jac_diff {F : E → E} {p : E} (hF : ContDiffAt ℝ 2 F p) :
     DifferentiableAt ℝ (jac F) p :=
   (hF.fderiv_right (m := 1) (by decide)).differentiableAt (by decide)
 
 def jacDelta (F : E → E) (p h : E) (t : ℝ) := jac F (ray p h t) - jac F p
 
+omit [CompleteSpace E] in
 @[simp] theorem jacDelta_zero (F : E → E) (p h : E) : jacDelta F p h 0 = 0 := by simp [jacDelta]
 
+omit [CompleteSpace E] in
 theorem jacDelta_derivative (hF : ContDiffAt ℝ 2 F p) (h : E) :
     HasDerivAt (jacDelta F p h) (fderiv ℝ (jac F) p h) 0 := by
   exact ((jac_diff hF).hasFDerivAt.comp_hasDerivAt_of_eq 0 (ray_hasDerivAt p h 0)
@@ -44,9 +51,11 @@ theorem jacDelta_derivative (hF : ContDiffAt ℝ 2 F p) (h : E) :
 def centerInv (c : ChartAt F p) (w : ℝ) (h : E) (t : ℝ) :=
   (jac F (c.pool w (ends p h t))).inverse
 
+omit [CompleteSpace E] in
 @[simp] theorem centerInv_zero (c : ChartAt F p) (w : ℝ) (h : E) :
     centerInv c w h 0 = (jac F p).inverse := by simp [centerInv]
 
+omit [CompleteSpace E] in
 theorem center_derivative (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F)
     (c : ChartAt F p) (w : ℝ) (h : E) :
     HasDerivAt (fun t ↦ c.pool w (ends p h t)) (w • h) 0 := by
@@ -69,6 +78,7 @@ theorem centerInv_derivative (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 
   change HasDerivAt (fun t ↦ (jac F (c.pool w (ends p h t))).inverse) _ _
   simpa [Function.comp_def, logJac, neg_smul, smul_mul_assoc, mul_smul_comm] using hh
 
+omit [CompleteSpace E] in
 theorem endpoint_line (ho : IsOpen Ω) (hp : p ∈ Ω)
     (rF : RegularOn 2 Ω F) (rG : RegularOn 2 Ω G) (bal : LocalBalance Ω w F G)
     (hw : 0 < w) (hw' : w < 1) (c : ChartAt F p) (d : ChartAt G p) (h : E) :

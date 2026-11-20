@@ -29,8 +29,7 @@ theorem zero_product_coefficient {P Q X Y : ℝ → R} {p q x y : R}
   apply tendsto_nhds_unique ht
   apply tendsto_const_nhds.congr'
   filter_upwards [he.filter_mono nhdsWithin_le_nhds] with t ht
-  simp only [Pi.add_apply, Pi.mul_apply, smul_mul_assoc, mul_smul_comm, ← smul_add, ht, smul_zero,
-    Function.const_apply]
+  simp only [smul_mul_assoc, mul_smul_comm, ← smul_add, ht, smul_zero]
 
 end Products
 
@@ -68,6 +67,7 @@ theorem square_zero_of_unequal (ho : IsOpen Ω) (hp : p ∈ Ω)
   rw [hg, neg_mul_neg, ← add_smul] at hs
   exact (smul_eq_zero.mp hs).resolve_left (by intro e; apply hne; linarith)
 
+omit [CompleteSpace E] in
 theorem affine_of_jac_deriv_zero (ho : IsOpen Ω) (hc : IsPreconnected Ω)
     (rF : RegularOn 2 Ω F) (hz : ∀ p ∈ Ω, ∀ h, fderiv ℝ (jac F) p h = 0) :
     AffineOn Ω F := by
@@ -83,6 +83,7 @@ section Hilbert
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
 variable {S : Set H} {A B : H → H} {p : H}
 
+omit [CompleteSpace H] in
 /-- Symmetry of a Jacobian is inherited by its directional derivatives. -/
 theorem jac_deriv_symmetric (ho : IsOpen S) (hp : p ∈ S) (rA : RegularOn 2 S A)
     (hA : PositiveJacobian S A) (h u v : H) :
@@ -99,6 +100,7 @@ theorem jac_deriv_symmetric (ho : IsOpen S) (hp : p ∈ S) (rA : RegularOn 2 S A
   simpa using (hu.inner ℝ (hasDerivAt_const 0 v)).unique
     (((hasDerivAt_const 0 u).inner ℝ hv).congr_of_eventuallyEq e)
 
+omit [CompleteSpace H] in
 /-- A positive-definite Jacobian makes a square-zero logarithmic derivative vanish. -/
 theorem logJac_zero_of_square (ho : IsOpen S) (hp : p ∈ S) (rA : RegularOn 2 S A)
     (hA : PositiveJacobian S A) (h : H) (hs : logJac A p h * logJac A p h = 0) :

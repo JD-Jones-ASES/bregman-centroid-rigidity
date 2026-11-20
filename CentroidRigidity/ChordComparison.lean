@@ -14,6 +14,7 @@ namespace CentroidRigidity
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
 variable {Ω : Set E} {F G : E → E} {p : E}
 
+omit [CompleteSpace E] in
 theorem RegularOn.lower {n m : ℕ∞ω} (H : RegularOn n Ω F) (hm : m ≤ n) : RegularOn m Ω F :=
   fun x hx ↦ ⟨(H x hx).1.of_le hm, (H x hx).2⟩
 
@@ -24,6 +25,7 @@ theorem logJac_diff (hF : ContDiffAt ℝ 3 F p) (hi : (jac F p).IsInvertible) (h
     (by decide)).comp p (ha.differentiableAt (by decide)))
   exact hb.mul (((ha.fderiv_right (m := 1) (by decide)).differentiableAt (by decide)).clm_apply (differentiableAt_const h))
 
+omit [CompleteSpace E] in
 theorem normalize_endpoint {A B U V X Y : Endo E} (ha : A.IsInvertible) (hv : V.IsInvertible)
     (eqn : U.inverse * X + V.inverse * Y = 0) :
     ((B.inverse * V) * (U.inverse * A)) * (A.inverse * X) + B.inverse * Y = 0 := by
@@ -36,9 +38,11 @@ theorem normalize_endpoint {A B U V X Y : Endo E} (ha : A.IsInvertible) (hv : V.
 
 def onRay (F : E → E) (p h : E) (t : ℝ) := normalJac F p (ray p h t)
 
+omit [CompleteSpace E] in
 theorem ray_neg_dir (p h : E) (t : ℝ) : ray p (-h) t = ray p h (-t) := by simp [ray]
 
-theorem chord_reflection (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F)
+omit [CompleteSpace E] in
+theorem chord_reflection (hp : p ∈ Ω) (rF : RegularOn 2 Ω F)
     (rG : RegularOn 2 Ω G) (bal : LocalBalance Ω (1/2) F G) (c : ChartAt F p) (d : ChartAt G p)
     (h : E) : ∀ᶠ t in 𝓝 (0:ℝ),
       d.pool (1/2) (chord p h t) = reflect p (c.pool (1/2) (chord p h t)) := by
@@ -55,6 +59,7 @@ theorem chord_reflection (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F
   rw [← add_sub_assoc, ← two_smul ℝ p, ← he]
   abel
 
+omit [CompleteSpace E] in
 theorem normalized_chord (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F)
     (rG : RegularOn 2 Ω G) (bal : LocalBalance Ω (1/2) F G)
     (c : ChartAt F p) (d : ChartAt G p) (h : E) :
@@ -65,7 +70,7 @@ theorem normalized_chord (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F
     simpa using (chord_derivative p h 0).continuousAt.tendsto
   have hv := (d.pool_tendsto (1/2) (rG p hp).1.continuousAt).comp ht
   have he := endpoint_equation (by decide) ho hp rF rG bal (by norm_num) (by norm_num) c d
-  filter_upwards [ht.eventually he, hv (ho.mem_nhds hp), chord_reflection ho hp rF rG bal c d h]
+  filter_upwards [ht.eventually he, hv (ho.mem_nhds hp), chord_reflection hp rF rG bal c d h]
     with t eqn hmem ref
   have hnorm := normalize_endpoint (B := jac G p) (rF p hp).2 (rG _ hmem).2 eqn
   simp only [transition, ← ref, normalJac, invNormal, onRay, ← mul_sub]
@@ -84,7 +89,7 @@ theorem odd_chord_small (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F)
   have h0 := transition_stationary ho hp rF rG
     (opposite_logJac ho hp rF rG bal (by norm_num) (by norm_num))
   have h1 : (fun x ↦ transition F G p x - 1) =o[𝓝 p] fun x ↦ x - p := by
-    simpa only [ContinuousLinearMap.zero_apply,sub_zero,transition_base (rF p hp).2 (rG p hp).2]
+    simpa only [zero_apply,sub_zero,transition_base (rF p hp).2 (rG p hp).2]
       using (hasFDerivAt_iff_isLittleO.mp h0)
   have h2 := (h1.comp_tendsto hu).trans_isBigO (chord_center_bound ho hp rF c h)
   have dU : HasDerivAt (onRay F p h) (logJac F p h) 0 := normal_curve (rF p hp).1 h
@@ -101,6 +106,7 @@ theorem odd_chord_small (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F)
     linear_combination (norm := abel) -he
   · exact Filter.Eventually.of_forall fun t ↦ (pow_succ t 2).symm
 
+omit [CompleteSpace E] in
 theorem onRay_ode (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F) (h : E) :
     ∀ᶠ t in 𝓝 (0:ℝ), HasDerivAt (onRay F p h) (onRay F p h t * logJac F (ray p h t) h) t := by
   have ht : Tendsto (ray p h) (𝓝 0) (𝓝 p) := by simpa using (ray_hasDerivAt p h 0).continuousAt.tendsto

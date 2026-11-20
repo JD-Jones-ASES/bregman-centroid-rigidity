@@ -2,10 +2,16 @@ version: v0.4
 project:
   name: Rigidity of complementary quasi-arithmetic centroids
   description: >-
-    Two locally invertible real Hilbert-space generators whose weighted centroids
-    average to the arithmetic rule at one unequal input weight are affine on every
-    connected open domain if the first Jacobian is symmetric positive definite.
-    The same conclusion follows from any fixed list of at least three positive weights.
+    For two smooth quasi-arithmetic centroid rules on a connected open subset of a
+    real Hilbert space, assume boundedly invertible derivatives and a symmetric
+    positive-definite Jacobian for one generator. Local balance at one unequal
+    input weight or on equally weighted triples forces affine generators and
+    arithmetic predictions. For two Bregman gradients this characterizes squared
+    Mahalanobis divergences. At half weights the logarithmic Jacobian field is
+    constant and commuting. In finite dimension a single basis classifies all
+    complementary pairs by opposite log-mean-exp rules and arithmetic axes.
+    The formalization also gives the exact scalar triple test, a nonlinear binary
+    witness, local existence of the two centroids, and Okamura's shear identity.
   authors: [JD Jones]
   responsible_maintainers: [JD Jones]
   license: MIT
@@ -16,24 +22,35 @@ classification:
   msc2020: ["39B22", "26E60"]
 sources:
   - title: Rigidity of complementary quasi-arithmetic centroids
-    type: original-proof
+    type: other
     relationship: other
-    location: README.md
-    note: This repository gives the formal proof of the vector generator results.
+    location: Proof.md
+    note: Direct written and formal proof of the real vector and Hilbert-space results.
   - title: On functional equations involving means
     authors: [Zoltán Daróczy, Zsolt Páles]
     type: paper
-    relationship: background
+    relationship: adapts
     id: https://doi.org/10.5486/PMD.2003.2799
     location: Theorems 6 and 7
-    note: Scalar weighted classification on a real interval.
+    note: The scalar weighted dichotomy is extended to coupled real vector generators by a direct operator proof.
   - title: The two-dimensional Matkowski–Sutô equation with holomorphic and strictly increasing generators
     authors: [Kazuki Okamura]
     type: paper
-    relationship: background
+    relationship: formalizes
     id: https://arxiv.org/abs/2609.11102
     location: Theorem 4.2 and Question 6.1
-    note: Provides shear examples and asks for structural conditions on vector generators.
+    note: The shear identity is formalized and the structural question motivates the common-basis result.
+  - title: On the Centroids of Symmetrized Bregman Divergences
+    authors: [Frank Nielsen, Richard Nock]
+    type: paper
+    relationship: background
+    id: https://arxiv.org/abs/0711.3242
+    location: Left-sided Bregman centroid
+    note: Identifies the pooling rule for a candidate prediction in the first divergence argument.
+related_formalizations:
+  - id: https://github.com/JD-Jones-ASES/EuclideanMidpointRigidity/tree/4929a3c843e8b8c2905581575d9d5644694e0c79
+    relationship: other
+    note: JD Jones's all-dimensional midpoint formalization motivated the question. The centroid proofs use local inverse charts directly.
 automation:
   methods:
     - method: agent
@@ -49,4 +66,7 @@ fidelity:
     Smoothness and invertibility are local. The balance condition uses four nearby points
     satisfying the actual two generator equations. The inverse function theorem supplies
     their centroids. Positive definiteness in Hilbert space is pointwise on nonzero vectors;
-    bounded invertibility of the Jacobians is an explicit hypothesis.
+    bounded invertibility of the Jacobians is an explicit hypothesis. Unequal weights use
+    C2 generators and half weights use C3. Only the fixed-basis classification requires
+    finite dimension. The loss theorem uses actual gradients and identifies the full oriented
+    divergence. The minimizer interpretation uses the cited Bregman centroid result.

@@ -19,15 +19,21 @@ def invNormal (F : E → E) (p x : E) : Endo E := (jac F x).inverse * jac F p
 def reflect (p x : E) := p + (p-x)
 def transition (F G : E → E) (p x : E) := normalJac G p (reflect p x) * invNormal F p x
 
+omit [NormedSpace ℝ E] [CompleteSpace E] in
 @[simp] theorem reflect_base (p : E) : reflect p p = p := by simp [reflect]
+omit [CompleteSpace E] in
 @[simp] theorem reflect_ray (p h : E) (t : ℝ) : reflect p (ray p h t) = ray p (-h) t := by
   simp [reflect, ray]
 
+omit [CompleteSpace E] in
 theorem normal_base (hi : (jac F p).IsInvertible) : normalJac F p p = 1 := inv_mul hi
+omit [CompleteSpace E] in
 theorem invNormal_base (hi : (jac F p).IsInvertible) : invNormal F p p = 1 := inv_mul hi
+omit [CompleteSpace E] in
 theorem transition_base (hi : (jac F p).IsInvertible) (hj : (jac G p).IsInvertible) :
     transition F G p p = 1 := by simp [transition, normal_base hj, invNormal_base hi]
 
+omit [CompleteSpace E] in
 theorem normal_curve (hF : ContDiffAt ℝ 2 F p) (h : E) :
     HasDerivAt (fun t ↦ normalJac F p (ray p h t)) (logJac F p h) 0 := by
   have hd := (jac_diff hF).hasFDerivAt.comp_hasDerivAt_of_eq 0 (ray_hasDerivAt p h 0) (ray_zero _ _).symm
@@ -84,11 +90,14 @@ theorem ChartAt.pool_smooth {n : ℕ∞ω} (hn : n ≠ 0) (c : ChartAt F p)
   simpa using hinv
 
 def chord (p h : E) (t : ℝ) := (ray p (-h) t, ray p h t)
+omit [CompleteSpace E] in
 @[simp] theorem chord_zero (p h : E) : chord p h 0 = (p,p) := by simp [chord]
 
+omit [CompleteSpace E] in
 theorem chord_derivative (p h : E) (t : ℝ) : HasDerivAt (chord p h) (-h,h) t :=
   (ray_hasDerivAt p (-h) t).prodMk (ray_hasDerivAt p h t)
 
+omit [CompleteSpace E] in
 theorem chord_smooth (p h : E) (n : ℕ∞ω) : ContDiff ℝ n (chord p h) := by
   unfold chord ray
   fun_prop

@@ -19,7 +19,7 @@ theorem complementary_scalars {l a b u v : ℝ}
   · subst l
     simp [sExp] at hu hv
     linarith
-  · simp only [sExp,if_neg hl,if_neg (neg_ne_zero.mpr hl)] at hu hv
+  · simp [sExp,hl] at hu hv
     field_simp [hl] at hu hv
     have eu : 2 * Real.exp (l*u) = Real.exp (l*a) + Real.exp (l*b) := by linarith [hu]
     have ev : 2 * Real.exp (-l*v) = Real.exp (-l*a) + Real.exp (-l*b) := by simp only [neg_mul]; linarith [hv]
@@ -48,6 +48,7 @@ theorem coord_axisMap (B : Module.Basis ι ℝ H) (l : ι → ℝ) (z : H) (i : 
 
 variable [CompleteSpace H]
 
+omit [CompleteSpace H] in
 theorem centroid_coordinate (B : Module.Basis ι ℝ H) (l : ι → ℝ)
     (hf : RepresentsOn Ω F p B l) (hp : (jac F p).IsInvertible)
     {x y u : H} (hx : x ∈ Ω) (hy : y ∈ Ω) (hu : u ∈ Ω)
@@ -69,6 +70,7 @@ theorem centroid_coordinate (B : Module.Basis ι ℝ H) (l : ι → ℝ)
   simpa [Module.Basis.coord_apply,coord_axisMap, smul_eq_mul,add_div,div_eq_mul_inv,mul_comm,mul_add]
     using hcoord
 
+omit [CompleteSpace H] in
 /-- The common-basis representation gives local balance of every pair
 of actual centroids, including mixed coordinates and zero exponential parameters. -/
 theorem balance_of_representation (ho : IsOpen Ω) (B : Module.Basis ι ℝ H) (l : ι → ℝ)

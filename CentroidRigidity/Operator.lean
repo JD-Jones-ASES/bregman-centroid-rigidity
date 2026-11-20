@@ -16,19 +16,23 @@ namespace CentroidRigidity
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
 
+omit [CompleteSpace E] in
 theorem inv_mul {a : Endo E} (h : a.IsInvertible) : a.inverse * a = 1 := by
   obtain ⟨L,rfl⟩ := h
   ext x
-  simp [ContinuousLinearMap.mul_apply]
+  simp
 
+omit [CompleteSpace E] in
 theorem mul_inv {a : Endo E} (h : a.IsInvertible) : a * a.inverse = 1 := by
   obtain ⟨L,rfl⟩ := h
   ext x
-  simp [ContinuousLinearMap.mul_apply]
+  simp
 
+omit [CompleteSpace E] in
 theorem inv_apply_apply {a : Endo E} (ha : a.IsInvertible) (x : E) :
     a.inverse (a x) = x := congrArg (fun t : Endo E ↦ t x) (inv_mul ha)
 
+omit [CompleteSpace E] in
 theorem apply_inv_apply {a : Endo E} (ha : a.IsInvertible) (x : E) :
     a (a.inverse x) = x := congrArg (fun t : Endo E ↦ t x) (mul_inv ha)
 
@@ -54,6 +58,7 @@ theorem inverse_curve {A : ℝ → Endo E} {a : Endo E} {t : ℝ}
 def logJac (F : E → E) (p h : E) : Endo E :=
   (jac F p).inverse * fderiv ℝ (jac F) p h
 
+omit [CompleteSpace E] in
 theorem jac_mul_logJac {F : E → E} {p : E} (hi : (jac F p).IsInvertible) (h : E) :
     jac F p * logJac F p h = fderiv ℝ (jac F) p h := by
   simp only [logJac, ← mul_assoc, mul_inv hi, one_mul]

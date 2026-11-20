@@ -18,8 +18,8 @@ theorem basis_of_joint_eigenvectors {M ι : Type*} [AddCommGroup M] [Module ℝ 
     ∃ B : Module.Basis (Fin (Module.finrank ℝ M)) ℝ M,
       ∀ j, ∃ χ : ι → ℝ, ∀ i, T i (B j) = χ i • B j := by
   classical
-  letI : NormedAddCommGroup M := g.toNormedAddCommGroup
-  letI : InnerProductSpace ℝ M := InnerProductSpace.ofCore g.toCore
+  let : NormedAddCommGroup M := g.toNormedAddCommGroup
+  let : InnerProductSpace ℝ M := InnerProductSpace.ofCore g.toCore
   have hsym (i : ι) : (T i).IsSymmetric := hs i
   have htop := LinearMap.IsSymmetric.iSup_iInf_eq_top_of_commute hsym (fun i j _ ↦ hc i j)
   let S : Set M := {x | ∃ χ : ι → ℝ, ∀ i, T i x = χ i • x}
@@ -29,13 +29,13 @@ theorem basis_of_joint_eigenvectors {M ι : Type*} [AddCommGroup M] [Module ℝ 
     refine iSup_le fun χ x hx ↦ Submodule.subset_span ⟨χ, fun i ↦ ?_⟩
     exact Module.End.mem_eigenspace_iff.mp ((Submodule.mem_iInf _).mp hx i)
   obtain ⟨s, hsS, hsp, hli⟩ := exists_linearIndependent ℝ S
-  let B := Module.Basis.mk hli (by rw [Subtype.range_coe_subtype, Set.setOf_mem_eq,hsp,hspan])
-  haveI : Finite s := Module.Finite.finite_basis B
-  letI := Fintype.ofFinite s
+  let B := Module.Basis.mk hli (by rw [Subtype.range_coe_subtype, Set.ofPred_mem_eq,hsp,hspan])
+  have : Finite s := Module.Finite.finite_basis B
+  let := Fintype.ofFinite s
   let e := Fintype.equivFinOfCardEq (Module.finrank_eq_card_basis B).symm
   refine ⟨B.reindex e,fun j ↦ ?_⟩
   rw [B.reindex_apply]
-  simpa only [B, Module.Basis.mk_apply,S,Set.mem_setOf_eq] using hsS (e.symm j).property
+  simpa only [B, Module.Basis.mk_apply,S,Set.mem_ofPred_eq] using hsS (e.symm j).property
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
 variable {Ω : Set H} {F G : H → H} {p : H}

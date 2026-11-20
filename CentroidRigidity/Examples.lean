@@ -76,7 +76,7 @@ theorem triple_balance_criterion (l a b c : ℝ) :
       convert logMeanThree_shift (-A) (-B) (-C) (-l*m) using 2 <;> dsimp [A,B,C] <;> ring
     change _ ↔ l=0 ∨ a=m ∨ b=m ∨ c=m
     rw [show (a+b+c)/3 = m from rfl]
-    simp only [triplePool,if_neg hl,if_neg (neg_ne_zero.mpr hl),hp,hn,hl,ite_false,false_or]
+    simp only [triplePool,hl,neg_eq_zero,ite_false,hp,hn,false_or]
     have eqn : ((logMeanThree A B C + l*m)/l + (logMeanThree (-A) (-B) (-C) + -l*m)/(-l))/2 = m
         ↔ logMeanThree A B C = logMeanThree (-A) (-B) (-C) := by
       constructor <;> intro h <;> field_simp [hl] at h ⊢ <;> linarith
@@ -108,6 +108,6 @@ theorem nonlinear_pair_witness : ∃ x y u v : ℝ,
   refine ⟨-Real.log 2,Real.log 2,Real.log (5/4),-Real.log (5/4),?_⟩
   have h : 0 < Real.log (5/4) := Real.log_pos (by norm_num)
   norm_num [mix,smul_eq_mul,Real.exp_neg,Real.exp_log,show (0:ℝ) < 5/4 by norm_num,
-    show (0:ℝ) < 2 by norm_num] <;> constructor <;> linarith
+    show (0:ℝ) < 2 by norm_num]
 
 end CentroidRigidity

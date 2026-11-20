@@ -1,21 +1,11 @@
-# Mathematical sources
+# Mathematical sources and scope
 
-Daróczy and Páles classified complementary scalar quasi-arithmetic means.
-Theorems 6 and 7 of their 2003 paper permit a common input weight and give
-the equal-weight exception when the two outputs have equal weight.
-[On functional equations involving means](https://publi.math.unideb.hu/paper/848/download/10_5486_PMD_2003_2799.pdf)
+**Scalar complementary means.** Daróczy and Páles solved the equal-weight Matkowski–Sutô equation on an interval for continuous strictly monotone generators. Their 2003 Theorems 6 and 7 cover a common input weight and a separate mixing weight for the two outputs. In their equation (4), set the output weight to $1/2$. The unequal-input-weight case is affine and the half-weight case includes opposite exponentials. Taking an input weight of $1/3$ already settles repeated triples in one dimension. The scalar dichotomy has classical priority. Jarczyk subsequently treated independent weights. [Daróczy–Páles, 2002](https://publi.math.unideb.hu/paper/792/download/) · [Daróczy–Páles, 2003, Theorems 6–7](https://publi.math.unideb.hu/paper/848/download/10_5486_PMD_2003_2799.pdf) · [Jarczyk, 2010](https://doi.org/10.1007/s10474-010-9264-z)
 
-Okamura's planar holomorphic classification and his strictly monotone shear
-examples motivate the real vector question. Theorem 4.2 gives nonaffine
-shears at arbitrary arity and weights. Question 6.1 asks for additional
-structure that restores classification.
-[The two-dimensional Matkowski–Sutô equation](https://arxiv.org/html/2609.11102v1)
+**Vector complementary means.** Okamura proves an affine/exponential classification for holomorphic planar generators under domain and image assumptions. Theorem 4.2 gives nonlinear real-plane shears balancing for arbitrary normalized weights. Question 6.1 asks for regularity or structural assumptions that restore classification. The real result here imposes positivity and symmetry on one Jacobian and bounded invertibility on both. It works locally on a connected open domain, derives the fixed basis in finite dimension, and proves unequal-weight rigidity and operator constancy in real Hilbert spaces of arbitrary dimension. The shear theorem in this package is an algebraic formalization of Okamura’s construction. [Okamura, §§2, 4 and 6](https://arxiv.org/html/2609.11102v1)
 
-Nielsen and Nock describe the oriented Bregman centroid obtained by
-applying the inverse gradient to a mean of gradients.
-[Sided and symmetrized Bregman centroids](https://www.lix.polytechnique.fr/Labo/Frank.Nielsen/SidedandSymmetrizedBregmanCentroids.pdf)
+**Bregman prediction.** Nielsen and Nock identify the left-sided Bregman centroid with the inverse gradient of the mean gradient. Nielsen places multivariate gradient quasi-arithmetic averages in information geometry. These sources justify the meaning of the generator equations as prediction rules for smooth strictly convex loss potentials. The formally compared quadratic-divergence identity uses the actual gradient (Lean’s `HasGradientAt`). The paper’s general variational characterization supplies the minimizer interpretation. [Nielsen and Nock](https://arxiv.org/abs/0711.3242) · [Nielsen on multivariate quasi-arithmetic averages](https://arxiv.org/abs/2301.10980)
 
-The motivating geometric problem is Nielsen and Okamura's Euclidean
-midpoint conjecture. This package proves the centroid identities directly
-from local inverse charts.
-[Euclidean midpoint theorem](https://github.com/JD-Jones-ASES/EuclideanMidpointRigidity/tree/4929a3c843e8b8c2905581575d9d5644694e0c79)
+**Relation to the Euclidean midpoint theorem.** Nielsen and Okamura’s Conjecture 9.1 concerns canonical short geodesic midpoints for dual Euclidean connections. The all-dimensional formalization by JD Jones with GPT-6.2 Astra motivated the centroid question. This proof starts from the additional affine coordinates intrinsic to a quasi-arithmetic mean. It derives its differential identities directly and imports Mathlib as its only direct library dependency. [Nielsen–Okamura, §9](https://arxiv.org/html/2609.07551v2#S9) · [EuclideanMidpointRigidity, motivating revision](https://github.com/JD-Jones-ASES/EuclideanMidpointRigidity/tree/4929a3c843e8b8c2905581575d9d5644694e0c79)
+
+**Priority and regularity.** A targeted search through November 19, 2026 examined weighted Matkowski–Sutô equations, vector quasi-arithmetic means, monotone and gradient generators, and Bregman centroid pooling. The closest scalar and vector results located are identified above. Worldwide priority for the real vector classification and the Hilbert-space extension remains unestablished. The proofs assume $C^2$ generators at unequal weight and $C^3$ at half weight. The common-basis result is finite-dimensional. Statistical accuracy and calibration are separate empirical questions.

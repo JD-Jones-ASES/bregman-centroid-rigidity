@@ -15,6 +15,7 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteS
 def SymFor (A T : Endo H) : Prop := ∀ u v, ⟪A (T u),v⟫_ℝ = ⟪A u,T v⟫_ℝ
 def StrictPos (A : Endo H) : Prop := ∀ u ≠ 0, 0 < ⟪A u,u⟫_ℝ
 
+omit [CompleteSpace H] in
 theorem zero_of_square_apply {A T : Endo H} (pos : StrictPos A) (sym : SymFor A T)
     (v : H) (hz : T (T v) = 0) : T v = 0 := by
   by_contra hn
@@ -23,6 +24,7 @@ theorem zero_of_square_apply {A T : Endo H} (pos : StrictPos A) (sym : SymFor A 
   rw [hz, inner_zero_right] at he
   linarith
 
+omit [CompleteSpace H] in
 /-- Transposing the ordered identity separates its two products. -/
 theorem annihilating_products {A C D : Endo H} (hp : StrictPos A)
     (hc : SymFor A C) (hd : SymFor A D) (he : 2*(C*D) + D*C = 0) :
@@ -39,7 +41,7 @@ theorem annihilating_products {A C D : Endo H} (hp : StrictPos A)
     have eq0 : ⟪A y,y⟫_ℝ = 0 := by
       change ⟪A ((2*(D*C) + C*D) x),y⟫_ℝ = 0
       simpa only [two_mul, add_apply, mul_apply_eq_comp, map_add, inner_add_left,
-        inner_add_right, hd, hc, ContinuousLinearMap.zero_apply, inner_zero_right] using e
+        inner_add_right, hd, hc, zero_apply, inner_zero_right] using e
     linarith
   have he' : (2:ℝ) • (C*D) + D*C = 0 := by simpa [two_smul,two_mul] using he
   have rev' : (2:ℝ) • (D*C) + C*D = 0 := by simpa [two_smul,two_mul] using rev
@@ -52,6 +54,7 @@ theorem annihilating_products {A C D : Endo H} (hp : StrictPos A)
 
 variable {Ω : Set H} {F : H → H} {p : H}
 
+omit [CompleteSpace H] in
 theorem logJac_sym (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 2 Ω F)
     (pos : PositiveJacobian Ω F) (h : H) : SymFor (jac F p) (logJac F p h) := by
   have he (x : H) : jac F p (logJac F p h x) = fderiv ℝ (jac F) p h x :=
@@ -68,6 +71,7 @@ theorem local_const_of_derivative_zero {V : Type*} [NormedAddCommGroup V] [Norme
     (fun s hs ↦ (h s hs).differentiableAt.differentiableWithinAt) (fun s hs ↦ (h s hs).deriv)
     ht (Metric.mem_ball_self hr)
 
+omit [CompleteSpace H] in
 /-- If the square is locally constant, its kernel is locally constant.
 A derivative taking values in that kernel and self-adjoint at the base
 point must vanish. No finite-dimensional spectral theorem is needed. -/

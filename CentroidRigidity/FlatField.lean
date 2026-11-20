@@ -14,6 +14,7 @@ namespace CentroidRigidity
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
 variable {Ω : Set H} {F G : H → H} {p : H}
 
+omit [CompleteSpace H] in
 theorem logJac_comm_arguments (hf : ContDiffAt ℝ 2 F p) (a b : H) :
     logJac F p a b = logJac F p b a := by
   change (jac F p).inverse (fderiv ℝ (jac F) p a b) = _
@@ -37,7 +38,7 @@ theorem derivative_jac_product (ho : IsOpen Ω) (hp : p ∈ Ω) (rF : RegularOn 
     filter_upwards [ht (ho.mem_nhds hp)] with t hx
     exact (jac_mul_logJac (rF _ hx).2 b).symm
   have eqn := hd.unique ((h1.mul hl).congr_of_eventuallyEq he)
-  simp only [Function.comp_apply, ray_zero, map_zero, add_zero, zero_add] at eqn
+  simp only [Function.comp_apply, ray_zero, map_zero, add_zero] at eqn
   rw [eqn, ← jac_mul_logJac (rF p hp).2 a, mul_add,mul_assoc]
   rfl
 
@@ -111,6 +112,6 @@ theorem constant_logJac (ho : IsOpen Ω) (hc : IsPreconnected Ω) (rF : RegularO
     {x y : H} (hx : x ∈ Ω) (hy : y ∈ Ω) (b : H) : logJac F x b = logJac F y b :=
   ho.is_const_of_fderiv_eq_zero hc
     (fun p hp ↦ (logJac_diff (rF p hp).1 (rF p hp).2 b).differentiableWithinAt)
-    (fun p hp ↦ ContinuousLinearMap.ext (fun a ↦ field_stationary ho hp rF rG pos bal a b)) hx hy
+    (fun _ hp ↦ ContinuousLinearMap.ext (fun a ↦ field_stationary ho hp rF rG pos bal a b)) hx hy
 
 end CentroidRigidity

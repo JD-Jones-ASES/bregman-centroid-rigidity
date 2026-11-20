@@ -12,6 +12,7 @@ namespace CentroidRigidity
 variable {E ι : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
 variable [Fintype ι] {Ω : Set E} {F G : E → E}
 
+omit [CompleteSpace E] in
 theorem affine_weighted_prediction {w : ι → ℝ} (hw : ∑ i, w i = 1) (ho : IsOpen Ω)
     (rF : RegularOn 2 Ω F) (aff : AffineOn Ω F) (x : ι → E) (hx : ∀ i, x i ∈ Ω)
     {u : E} (hu : u ∈ Ω) (he : F u = ∑ i, w i • F (x i)) : u = ∑ i, w i • x i := by
@@ -24,6 +25,7 @@ theorem affine_weighted_prediction {w : ι → ℝ} (hw : ∑ i, w i = 1) (ho : 
   exact (inv_apply_apply hi u).symm.trans
     ((congrArg (fun z : E ↦ L.inverse z) eqn).trans (inv_apply_apply hi _))
 
+omit [CompleteSpace E] in
 theorem all_weights_of_affine (ho : IsOpen Ω) (rF : RegularOn 2 Ω F) (rG : RegularOn 2 Ω G)
     (aF : AffineOn Ω F) (aG : AffineOn Ω G) (w : ι → ℝ) (hw : ∑ i, w i = 1) :
     FamilyBalance Ω w F G := by

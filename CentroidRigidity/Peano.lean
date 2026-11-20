@@ -39,7 +39,8 @@ theorem second_peano {f g : ℝ → V} {a : V}
   let P := fun t : ℝ ↦ f 0 + t • g 0 + (t^2/2) • a
   have hP (t : ℝ) : HasDerivAt P (g 0 + t • a) t := by
     have h2 : HasDerivAt (fun s : ℝ ↦ s^2/2) t t := by
-      convert ((hasDerivAt_pow 2 t).div_const 2) using 1 <;> ring
+      convert ((hasDerivAt_pow 2 t).div_const 2) using 1
+      ring
     have h1 : HasDerivAt (fun s : ℝ ↦ f 0 + s • g 0) (g 0) t := by
       simpa only [zero_add, one_smul, Pi.add_def, id_eq] using
         (hasDerivAt_const t (f 0)).add ((hasDerivAt_id t).smul_const (g 0))
