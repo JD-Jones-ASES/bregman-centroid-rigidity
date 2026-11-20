@@ -15,7 +15,8 @@ open Set Filter
 open scoped Topology InnerProductSpace BigOperators ContDiff
 namespace CentroidRigidity
 
-variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
+universe u
+variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
 variable {Ω : Set H} {F G : H → H}
 
 /-- One fixed unequal input weight forces affine generators on a connected

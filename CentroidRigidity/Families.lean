@@ -14,13 +14,6 @@ namespace CentroidRigidity
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 variable {ι : Type*} [Fintype ι]
 
-/-- Balance of two generator centroids of an actual finite family of inputs. -/
-def FamilyBalance (Ω : Set E) (w : ι → ℝ) (F G : E → E) : Prop :=
-  ∀ p ∈ Ω, ∃ U ∈ 𝓝 p, ∀ x : ι → E, (∀ i, x i ∈ U) →
-    ∀ u ∈ U, ∀ v ∈ U,
-    F u = ∑ i, w i • F (x i) → G v = ∑ i, w i • G (x i) →
-    u + v = (2 : ℝ) • ∑ i, w i • x i
-
 theorem sum_repeated [DecidableEq ι] (w : ι → ℝ) (hw : ∑ i, w i = 1)
     (k : ι) (x y : E) : (∑ i, w i • (if i = k then y else x)) = mix (w k) x y := by
   calc

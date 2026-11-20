@@ -44,7 +44,6 @@ def PositiveJacobian {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H
   ∀ p ∈ Ω, (∀ a b, ⟪fderiv ℝ F p a, b⟫_ℝ = ⟪a, fderiv ℝ F p b⟫_ℝ) ∧
     ∀ a ≠ 0, 0 < ⟪fderiv ℝ F p a, a⟫_ℝ
 
-
 variable {ι : Type*} [Fintype ι]
 
 /-- Balance of two generator centroids of an actual finite family of inputs. -/
@@ -54,7 +53,8 @@ def FamilyBalance (Ω : Set E) (w : ι → ℝ) (F G : E → E) : Prop :=
     F u = ∑ i, w i • F (x i) → G v = ∑ i, w i • G (x i) →
     u + v = (2 : ℝ) • ∑ i, w i • x i
 
-variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
+universe u
+variable {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [CompleteSpace H]
 variable {Ω : Set H} {F G : H → H}
 
 /-- One fixed unequal input weight forces affine generators on a connected

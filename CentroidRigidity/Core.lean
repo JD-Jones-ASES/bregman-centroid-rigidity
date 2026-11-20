@@ -47,6 +47,15 @@ def PositiveJacobian {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H
   ∀ p ∈ Ω, (∀ a b, ⟪fderiv ℝ F p a, b⟫_ℝ = ⟪a, fderiv ℝ F p b⟫_ℝ) ∧
     ∀ a ≠ 0, 0 < ⟪fderiv ℝ F p a, a⟫_ℝ
 
+variable {ι : Type*} [Fintype ι]
+
+/-- Balance of two generator centroids of an actual finite family of inputs. -/
+def FamilyBalance (Ω : Set E) (w : ι → ℝ) (F G : E → E) : Prop :=
+  ∀ p ∈ Ω, ∃ U ∈ 𝓝 p, ∀ x : ι → E, (∀ i, x i ∈ U) →
+    ∀ u ∈ U, ∀ v ∈ U,
+    F u = ∑ i, w i • F (x i) → G v = ∑ i, w i • G (x i) →
+    u + v = (2 : ℝ) • ∑ i, w i • x i
+
 @[simp] theorem mix_self (w : ℝ) (x : E) : mix w x x = x := by
   unfold mix
   module
