@@ -2,7 +2,7 @@ module
 
 public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 public import Mathlib.Analysis.Calculus.MeanValue
-public import Mathlib.Analysis.InnerProductSpace.Basic
+public import CentroidRigidity.Definitions
 public import Mathlib.Tactic.Module
 
 /-! # Local quasi-arithmetic pooling
@@ -22,39 +22,6 @@ open scoped Topology InnerProductSpace ContDiff
 namespace CentroidRigidity
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-
-/-- Weighted arithmetic interpolation, with weight `w` on the second argument. -/
-def mix (w : ℝ) (x y : E) : E := (1 - w) • x + w • y
-
-/-- A generator with the indicated smoothness and invertible derivative at each domain point. -/
-def RegularOn (n : ℕ∞ω) (Ω : Set E) (F : E → E) : Prop :=
-  ∀ p ∈ Ω, ContDiffAt ℝ n F p ∧ (fderiv ℝ F p).IsInvertible
-
-/-- The two locally defined pooling rules average to the arithmetic rule.
-The four points are the inputs and their respective centroids. -/
-def LocalBalance (Ω : Set E) (w : ℝ) (F G : E → E) : Prop :=
-  ∀ p ∈ Ω, ∃ U ∈ 𝓝 p, ∀ x ∈ U, ∀ y ∈ U, ∀ u ∈ U, ∀ v ∈ U,
-    F u = mix w (F x) (F y) → G v = mix w (G x) (G y) →
-    u + v = (2 : ℝ) • mix w x y
-
-/-- The restriction of a continuous affine map. -/
-def AffineOn (Ω : Set E) (F : E → E) : Prop :=
-  ∃ (L : E →L[ℝ] E) (b : E), ∀ x ∈ Ω, F x = L x + b
-
-/-- Positive definiteness and symmetry of the Jacobian of the first generator. -/
-def PositiveJacobian {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H]
-    (Ω : Set H) (F : H → H) : Prop :=
-  ∀ p ∈ Ω, (∀ a b, ⟪fderiv ℝ F p a, b⟫_ℝ = ⟪a, fderiv ℝ F p b⟫_ℝ) ∧
-    ∀ a ≠ 0, 0 < ⟪fderiv ℝ F p a, a⟫_ℝ
-
-variable {ι : Type*} [Fintype ι]
-
-/-- Balance of two generator centroids of an actual finite family of inputs. -/
-def FamilyBalance (Ω : Set E) (w : ι → ℝ) (F G : E → E) : Prop :=
-  ∀ p ∈ Ω, ∃ U ∈ 𝓝 p, ∀ x : ι → E, (∀ i, x i ∈ U) →
-    ∀ u ∈ U, ∀ v ∈ U,
-    F u = ∑ i, w i • F (x i) → G v = ∑ i, w i • G (x i) →
-    u + v = (2 : ℝ) • ∑ i, w i • x i
 
 @[simp] theorem mix_self (w : ℝ) (x : E) : mix w x x = x := by
   unfold mix

@@ -4,7 +4,18 @@
   "theorem_names": [
     "CentroidRigidity.complementary_unequal_weight",
     "CentroidRigidity.three_input_centroids",
-    "CentroidRigidity.weighted_family_centroids"
+    "CentroidRigidity.weighted_family_centroids",
+    "CentroidRigidity.arithmetic_predictions_of_triples",
+    "CentroidRigidity.half_weight_operator",
+    "CentroidRigidity.binary_generator_classification",
+    "CentroidRigidity.binary_prediction_formulas",
+    "CentroidRigidity.bregman_losses_of_triple_balance",
+    "CentroidRigidity.local_centroid_existence",
+    "CentroidRigidity.individual_triples",
+    "CentroidRigidity.exponential_triple_generator_equation",
+    "CentroidRigidity.exponential_binary_balance",
+    "CentroidRigidity.nonlinear_binary_centroids",
+    "CentroidRigidity.complementary_vector_shears"
   ],
   "permitted_axioms": [
     "propext",
