@@ -1,0 +1,14 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "CentroidRigidity.complementary_unequal_weight",
+    "CentroidRigidity.three_input_centroids",
+    "CentroidRigidity.weighted_family_centroids"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

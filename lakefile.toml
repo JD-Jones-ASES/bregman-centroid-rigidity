@@ -1,0 +1,17 @@
+name = "bregmanCentroidRigidity"
+version = "0.1.0"
+defaultTargets = ["CentroidRigidity", "Challenge", "Solution"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "fc4f59e577feb1a4956671bc04ac18aaaf8cd842"
+
+[[lean_lib]]
+name = "CentroidRigidity"
+
+[[lean_lib]]
+name = "Challenge"
+
+[[lean_lib]]
+name = "Solution"
