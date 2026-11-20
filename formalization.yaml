@@ -1,0 +1,52 @@
+version: v0.4
+project:
+  name: Rigidity of complementary quasi-arithmetic centroids
+  description: >-
+    Two locally invertible real Hilbert-space generators whose weighted centroids
+    average to the arithmetic rule at one unequal input weight are affine on every
+    connected open domain if the first Jacobian is symmetric positive definite.
+    The same conclusion follows from any fixed list of at least three positive weights.
+  authors: [JD Jones]
+  responsible_maintainers: [JD Jones]
+  license: MIT
+repository:
+  role: substantive-development
+classification:
+  arxiv: ["math.CA", "math.FA"]
+  msc2020: ["39B22", "26E60"]
+sources:
+  - title: Rigidity of complementary quasi-arithmetic centroids
+    type: original-proof
+    relationship: other
+    location: README.md
+    note: This repository gives the formal proof of the vector generator results.
+  - title: On functional equations involving means
+    authors: [Zoltán Daróczy, Zsolt Páles]
+    type: paper
+    relationship: background
+    id: https://doi.org/10.5486/PMD.2003.2799
+    location: Theorems 6 and 7
+    note: Scalar weighted classification on a real interval.
+  - title: The two-dimensional Matkowski–Sutô equation with holomorphic and strictly increasing generators
+    authors: [Kazuki Okamura]
+    type: paper
+    relationship: background
+    id: https://arxiv.org/abs/2609.11102
+    location: Theorem 4.2 and Question 6.1
+    note: Provides shear examples and asks for structural conditions on vector generators.
+automation:
+  methods:
+    - method: agent
+      models: [GPT-6.2 Astra]
+      framework: OpenAI Codex
+      tool_setup: Lean 4, Mathlib, Python and SymPy
+      prompting_notes: Written arguments, proof construction and source checks under the direction of JD Jones.
+review:
+  status: self-assessed
+  notes: No independent human specialist review has been reported.
+fidelity:
+  divergences: >-
+    Smoothness and invertibility are local. The balance condition uses four nearby points
+    satisfying the actual two generator equations. The inverse function theorem supplies
+    their centroids. Positive definiteness in Hilbert space is pointwise on nonzero vectors;
+    bounded invertibility of the Jacobians is an explicit hypothesis.
